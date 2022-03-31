@@ -24,7 +24,7 @@ from sklearn.metrics import classification_report,confusion_matrix
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 
-stars = pd.read_csv('/content/drive/MyDrive/Colab Notebooks/Stars.csv')
+stars = pd.read_csv('/Users/shuchitamishra/Desktop/Jobs/OA/NASA-Star-Type-Classification/Stars.csv')
 
 stars.head(10)
 
@@ -277,7 +277,7 @@ import pickle
 from PIL import Image
 
 st.header("NASA Star Type Classification:")
-image = Image.open('/content/drive/MyDrive/Colab Notebooks/nasaimage.jpeg')
+image = Image.open('/Users/shuchitamishra/Desktop/Jobs/OA/NASA-Star-Type-Classification/nasaimage.jpeg')
 st.image(image, use_column_width=True)
 st.write("Please insert values, to get Star type class prediction")
 
