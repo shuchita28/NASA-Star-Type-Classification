@@ -76,7 +76,7 @@ fig = px.histogram(stars, 'Temperature',
 
 fig.add_vline(x=stars['Temperature'].mean(), line_width=2, line_dash="dash", line_color="black")
 
-fig.show()
+#fig.show()
 
 #balanced data
 stars.groupby('Type').count().plot(kind = 'bar')
@@ -84,16 +84,16 @@ stars.groupby('Type').count().plot(kind = 'bar')
 #plotting colors by frequencies
 color = ['Red', 'SteelBlue', 'lightskyblue', 'lightyellow', 'White', 'Orange']
 stars['Color'].value_counts().plot(kind = 'bar', color = color, edgecolor = 'slategray')
-plt.xticks(rotation = 45)
-plt.title('Red colored stars are highest in number')
-plt.xlabel('Color')
-plt.ylabel('Frequency')
+#plt.xticks(rotation = 45)
+#plt.title('Red colored stars are highest in number')
+#plt.xlabel('Color')
+#plt.ylabel('Frequency')
 
 stars['Spectral_Class'].value_counts().plot(kind = 'bar', color = 'hotpink', edgecolor = 'mediumorchid')
-plt.title('Most of the stars have Classs M')
-plt.xlabel('Spectral Class')
-plt.ylabel('Frequency')
-plt.xticks(rotation = 0)
+#plt.title('Most of the stars have Classs M')
+#plt.xlabel('Spectral Class')
+#plt.ylabel('Frequency')
+#plt.xticks(rotation = 0)
 
 #Most of the stars have luminosity close to 25k with blue stars having highest number of luminous stars
 fig = px.histogram(stars, 'L',             
@@ -102,7 +102,7 @@ fig = px.histogram(stars, 'L',
 
 fig.add_vline(x=stars['L'].mean(), line_width=2, line_dash="dash", line_color="black")
 
-fig.show()
+#fig.show()
 
 #Most of the stars have small relative radius close to 100 with blue stars having highest number of larger stars
 fig = px.histogram(stars, 'R',             
@@ -111,16 +111,16 @@ fig = px.histogram(stars, 'R',
 
 fig.add_vline(x=stars['R'].mean(), line_width=2, line_dash="dash", line_color="black")
 
-fig.show()
+#fig.show()
 
-sns.barplot(data = stars, x = 'Type', y = 'Temperature')
+#sns.barplot(data = stars, x = 'Type', y = 'Temperature')
 
-sns.barplot(data = stars, x = 'Color', y = 'Temperature')
+#sns.barplot(data = stars, x = 'Color', y = 'Temperature')
 
-sns.barplot(data = stars, x = 'Spectral_Class', y = 'Temperature')
+#sns.barplot(data = stars, x = 'Spectral_Class', y = 'Temperature')
 
 #doesn't show much
-sns.pairplot(stars)
+#sns.pairplot(stars)
 
 stars_type_0 = stars[stars['Type'] == 0]
 stars_type_1 = stars[stars['Type'] == 1]
@@ -132,7 +132,7 @@ stars_type_5 = stars[stars['Type'] == 5]
 star_type_df = [stars_type_0, stars_type_1, stars_type_2, stars_type_3, stars_type_4, stars_type_5]
 star_type_names_df = ['0', '1', '2', '3', '4', '5']
 
-for index, star_type in enumerate(star_type_df):
+"""for index, star_type in enumerate(star_type_df):
   plt.figure(figsize = (10,8))
   plt.hist(star_type['Color'], 
            bins = 10)
@@ -174,20 +174,19 @@ for index, star_type in enumerate(star_type_df):
   plt.ylabel('Frequency')
   plt.xticks(rotation = 45)
 
-  plt.show()
+  plt.show()"""
 
 stars_ohe = pd.get_dummies(data = stars, columns = ['Color', 'Spectral_Class'], drop_first= True)
 stars_ohe
 
-sns.heatmap(stars_ohe.corr(), 
-            cmap = 'Blues')
+#sns.heatmap(stars_ohe.corr(), cmap = 'Blues')
 
 # Visualizing correlation coefficients between features and target variable:
-fig = plt.figure(figsize=(8,10))
-ax = sns.heatmap(stars_ohe.corr()[['Type']].sort_values('Type', ascending=False), annot = True, annot_kws= {"size":12}, cmap='plasma')
-ax.set_title('Correlation Coefficient Between Each Feature and Star Type', fontsize=18) 
-ax.set_xlabel('Features', fontsize = 16) 
-ax.set_ylabel('Features', fontsize = 16) 
+#fig = plt.figure(figsize=(8,10))
+#ax = sns.heatmap(stars_ohe.corr()[['Type']].sort_values('Type', ascending=False), annot = True, annot_kws= {"size":12}, cmap='plasma')
+#ax.set_title('Correlation Coefficient Between Each Feature and Star Type', fontsize=18) 
+#ax.set_xlabel('Features', fontsize = 16) 
+#ax.set_ylabel('Features', fontsize = 16) 
 #ax.tick_params(axis = "both", labelsize = 12)
 
 scaler = StandardScaler()
@@ -224,7 +223,7 @@ print(classification_report(Y_test,predict_knn_1))
 print(classification_report(Y_test,predict_knn_5))
 
 error_rate= []
-for i in range(1,40):
+"""for i in range(1,40):
     model_knn = KNeighborsClassifier(n_neighbors = i)
     model_knn.fit(X_train,Y_train)
     predict_knn_i = model_knn.predict(X_test)
@@ -233,7 +232,7 @@ plt.figure(figsize = (10,6))
 plt.plot(range(1,40),error_rate,color = 'blue',linestyle = '--',marker = 'o',markerfacecolor='red',markersize = 10)
 plt.title('Error Rate vs K')
 plt.xlabel('K')
-plt.ylabel('Error Rate')
+plt.ylabel('Error Rate')"""
 
 print(model_knn_5.score(X_test, Y_test))
 
@@ -247,17 +246,17 @@ print(avg_cv_scores)
 k_range = range(1, 40)
 k_scores = []
 # use iteration to caclulator different k in models, then return the average accuracy based on the cross validation
-for k in k_range:
+"""for k in k_range:
     knn = KNeighborsClassifier(n_neighbors=k)
     scores = cross_val_score(knn, X, Y, cv=5, scoring='accuracy')
     k_scores.append(scores.mean())
-
+"""
 # plot to see clearly
-plt.figure(figsize = (10,6))
+"""plt.figure(figsize = (10,6))
 plt.plot(k_range, k_scores, color = 'blue',linestyle = '--',marker = 'o',markerfacecolor='red',markersize = 10)
 plt.xlabel('Value of K for KNN')
 plt.ylabel('Cross-Validated Accuracy')
-plt.show()
+plt.show()"""
 
 params={'n_neighbors': range(1,40)}
 params
