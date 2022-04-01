@@ -18,13 +18,29 @@ from sklearn.model_selection import GridSearchCV
 
 
 stars_ohe = pd.read_csv('/Users/shuchitamishra/Desktop/Jobs/OA/NASA-Star-Type-Classification/FinalProcessed.csv')
-
 scaler = StandardScaler()
 
-stars_ohe_scaled = scaler.fit(stars_ohe.drop('Type', axis = 1))
-stars_ohe_scaled = scaler.transform(stars_ohe.drop('Type', axis = 1))
+stars_ohe_scaled = scaler.fit(stars_ohe.drop(['Type','Index'], axis = 1))
+stars_ohe_scaled = scaler.transform(stars_ohe.drop(['Type','Index'], axis = 1))
 
-X = pd.DataFrame(stars_ohe_scaled, columns = stars_ohe.columns[:-1])
+cols = ['Temperature',
+        'L',
+        'R',
+        'A_M',
+        'Color_Blue-White',
+        'Color_Orange',
+        'Color_Red',
+        'Color_White',
+        'Color_White-Yellow',
+        'Spectral_Class_B',
+        'Spectral_Class_F',
+        'Spectral_Class_G',
+        'Spectral_Class_K',
+        'Spectral_Class_M',
+        'Spectral_Class_O']
+
+
+X = pd.DataFrame(stars_ohe_scaled, columns = cols)
 Y = stars_ohe['Type']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, random_state = 42, test_size = 0.33)
@@ -49,8 +65,8 @@ predict_knn_5 = model_knn_5.predict(X_test)
 #print(confusion_matrix(Y_test, predict_knn_1))
 #print(confusion_matrix(Y_test, predict_knn_5))
 
-print(classification_report(Y_test,predict_knn_1))
-print(classification_report(Y_test,predict_knn_5))
+print("For kNN model with n = 1\n*******************************************************\n", classification_report(Y_test,predict_knn_1))
+print("For kNN model with n = 5\n*******************************************************\n", classification_report(Y_test,predict_knn_5))
 
 #error_rate= []
 #for i in range(1,40):
@@ -107,11 +123,12 @@ image = Image.open('/Users/shuchitamishra/Desktop/Jobs/OA/NASA-Star-Type-Classif
 st.image(image, use_column_width=True)
 st.write("Please insert values, to get Star type class prediction")
 
+
 Temperature_ip = st.slider('Temperature:', -0.92 ,3.0)
 L_ip = st.slider('Luminosity:', -0.6, 4.3)
 R_ip = st.slider('Relative radius',-0.4, 3.5)
-A_M_ip = st.slider('Absolute Magnitude:', -1.5, 3.5)
-Type_ip = st.radio("Type:", ("-0.47" ,"2.12"))
+A_M_ip = st.slider('Absolute Mass:', -1.5, 3.5)
+#Type_ip = st.radio("Type:", ("-0.47" ,"2.12"))
 Color_Blue_White_ip = st.radio("Is the color blue-white?", ["0", "1"])
 Color_Orange_ip = st.radio("Is the color orange?", ["0", "1"])
 Color_Red_ip = st.radio("Is the color red?", ["0", "1"])
@@ -128,7 +145,6 @@ data = {'Temperature': Temperature_ip,
         'Luminosity': L_ip,
         'Relative radius': R_ip,
         'Absolute magnitude': A_M_ip,
-        'Type' : Type_ip,
         'Color_Blue_White' : Color_Blue_White_ip,
         'Color_Orange' : Color_Orange_ip,
         'Color_Red' : Color_Red_ip,
@@ -149,9 +165,10 @@ pred_proba = model_knn_5.predict_proba(features)
 #or
 prediction = model_knn_5.predict(features)
 
-st.subheader('Prediction Percentages:') 
-st.write('**Probablity of Star Type being B is ( in % )**:',pred_proba[0][0]*100)
-st.write('**Probablity of Star Type being F is ( in % )**:',pred_proba[0][1]*100)
-st.write('**Probablity of Star Type being G is ( in % )**:',pred_proba[0][2]*100)
-st.write('**Probablity of Star Type being K is ( in % )**:',pred_proba[0][3]*100)
-st.write('**Probablity of Star Type being M is ( in % )**:',pred_proba[0][4]*100)
+st.subheader('Prediction Percentages:')  
+st.write('**Probablity of Star Type being 0 i.e. Red Dwarf is ( in % )**:',pred_proba[0][0]*100)
+st.write('**Probablity of Star Type being 1 i.e. Brown Dwarf is ( in % )**:',pred_proba[0][1]*100)
+st.write('**Probablity of Star Type being 2 i.e. White Dwarf is ( in % )**:',pred_proba[0][2]*100)
+st.write('**Probablity of Star Type being 3 i.e. Main sequence is ( in % )**:',pred_proba[0][3]*100)
+st.write('**Probablity of Star Type being 4 i.e. Super Giants is ( in % )**:',pred_proba[0][4]*100)
+st.write('**Probablity of Star Type being 5 i.e. Hyper Giants is ( in % )**:',pred_proba[0][5]*100)
