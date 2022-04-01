@@ -30,6 +30,7 @@ One hot encoded from categorical to numeric (0 to 5) as follows :
 ## Math and formulae :
 
 Lo = 3.828 x 10^26 Watts (Avg Luminosity of Sun)
+
 Ro = 6.9551 x 10^8 m (Avg Radius of Sun)
 
 ## Deployment
